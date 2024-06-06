@@ -18,11 +18,12 @@
     <nav class="navbar">
         <a class="nav-nom" href="index.html">SAE23</a>
         <ul class="nav-links">
-            <li><a href="./index.php">Accueil</a></li>
+        <li><a href="./index.php">Accueil</a></li>
             <li><a href="./consultation.php">Consultation</a></li>
-            <li><a href="./gestion.php">Gestion</a></li>
             <li><a href="./gestion_projet.html">Gestion de Projet</a></li>
-            <li><a href="./admin.php">Administration</a></li>
+            <li><a href="./login_gest.php">Gestion</a></li>
+            <li><a href="./login_admin.php">Administration</a></li>
+
         </ul>
      </nav>
      
