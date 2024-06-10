@@ -6,7 +6,7 @@
     <title>SAE23</title>
 
     <!--CSS links-->
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 
     <!--Policies links-->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700,400italic,700italic" rel="stylesheet" type="text/css">
@@ -16,13 +16,13 @@
 <body>
     <!--Navbar-->
     <nav class="navbar">
-        <a class="nav-nom" href="index.html">SAE23</a>
+        <a class="nav-nom" href="./index.php">SAE23</a>
         <ul class="nav-links">
             <li><a href="./index.php">Accueil</a></li>
             <li><a href="./consultation.php">Consultation</a></li>
-            <li><a href="./gestion.php">Gestion</a></li>
             <li><a href="./gestion_projet.html">Gestion de Projet</a></li>
-            <li><a href="./admin.php">Administration</a></li>
+            <li><a href="./loginadmin.php">Administration</a></li>
+            <li><a href="./">Se déconnecter</a></li>
         </ul>
      </nav>
      
