@@ -40,6 +40,7 @@
 <!--Footer-->
 <footer>
     Site réalisé dans le cadre de la SAE23<br>
+    <a href="./mentions-legales.html">Mentions Légales</a><br>
 </footer>
 
 </body>
