@@ -2,19 +2,19 @@
 // Connexion à la base de données
 $databaseConnection = mysqli_connect("localhost", "fest", "pass23", "sae23");
 
-// Vérifier la connexion
+// Check connection
 if (!$databaseConnection) {
     die("Échec de la connexion : " . mysqli_connect_error());
 }
 
-// Paramètres
-$salle = "E007"; // Remplacez par le nom de la salle souhaitée
-$typeCapteur = "co2"; // Remplacez par le type de capteur souhaité
+// Settings
+$salle = "E007"; // Replace with the name of the desired room
+$typeCapteur = "co2"; // Replace with desired sensor type
 
-// Construction du nom du capteur
+// Construction of sensor name
 $sensorName = $salle . '_' . $typeCapteur;
 
-// Requête SQL pour obtenir la valeur minimale, maximale et moyenne
+// SQL query to get minimum, maximum and average value
 $query = "
     SELECT 
         MAX(Valeur) AS ValeurMax,
@@ -26,15 +26,15 @@ $query = "
         NomCapt = '$sensorName'
 ";
 
-// Exécution de la requête
+// Executing the query
 $result = mysqli_query($databaseConnection, $query);
 
-// Vérification du résultat
+// Checking the result
 if ($result) {
-    // Récupération du résultat
+    // Retrieving the result
     $row = mysqli_fetch_assoc($result);
 
-    // Affichage des résultats
+    // Displaying results
     if ($row) {
         $maxValue = $row['ValeurMax'];
         $minValue = $row['ValeurMin'];
@@ -51,6 +51,6 @@ if ($result) {
     echo "Erreur lors de l'exécution de la requête : " . mysqli_error($databaseConnection);
 }
 
-// Fermeture de la connexion
+// Closing the connection
 mysqli_close($databaseConnection);
 ?>
