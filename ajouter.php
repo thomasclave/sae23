@@ -1,6 +1,7 @@
-<?php
-	// Démarrage de la session
-	session_start();
+<?php 
+	session_start(); 
+	if ($_SESSION["auth"]!=TRUE)
+		header("Location:login_admin_error.php");
 ?>
 
 <!DOCTYPE html>
@@ -26,36 +27,27 @@
             <li><a href="./index.php">Accueil</a></li>
             <li><a href="./consultation.php">Consultation</a></li>
             <li><a href="./gestion_projet.html">Gestion de Projet</a></li>
-            <li><a href="./admin.php">Administration</a></li>
             <li><a href="./gestion.php">Gestion</a></li>
+            <li><a href="./admin.php">Administration</a></li>
         </ul>
      </nav>
      
-     <!--Title-->
-     <header>
-     <h2>Gestion</h2>
-     </header>
+    <!--Title-->
+    <header>
+    <h2>Administration</h2>
+    </header>
 
-     <p>
-		<br/>
-		<em><strong>Gestion des bâtiments : Acc&egrave;s limit&eacute; aux personnes autoris&eacute;es</strong></em>
-		<br/>
-	</p>
+    <p>
+        <br />
+	    <em><strong>Que voulez-vous ajouter ?</strong></em>
+	    <br />
+    </p>
 
-<main>
-
-    <form action="login_gest.php" method="post" class="form">
-        <fieldset>
-            <legend>Identifiez vous en tant que gestionnaire</legend>
-            <label for="login">Login:</label>
-            <input type="text" id="login" name="login"><br><br>
-            <label for="password">Mot de passe:</label>
-            <input type="password" id="mdp" name="mdp"><br><br>
-        </fieldset>
-        <input type="submit" value="Se connecter">
-		<hr/>
-
-</main>
+    <main>
+        <button onclick="location.href='./add_bat.php'">Batiment</button>
+        <button onclick="location.href='./add_sal.php'">Salle</button>
+        <button onclick="location.href='./add_cap.php'">Capteur</button>
+    </main>
 
 <!--Footer-->
 <footer>

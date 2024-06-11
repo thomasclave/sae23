@@ -36,13 +36,13 @@
      <h2>Administration</h2>
      </header>
 
-<main>
-
     <p>
-		<br />
-		<em><strong>Administration de la base : Acc&egrave;s limit&eacute; aux personnes autoris&eacute;es</strong></em>
-		<br />
-	</p>
+        <br />
+	    <em><strong>Administration de la base : Acc&egrave;s limit&eacute; aux personnes autoris&eacute;es</strong></em>
+	    <br />
+    </p>
+
+<main>
 		<form action="login_admin.php" method="post" enctype="multipart/form-data" class="form">
 			<fieldset>
 				<legend>Saisissez le mot de passe administrateur</legend>
