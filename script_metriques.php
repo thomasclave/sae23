@@ -1,37 +1,45 @@
 <?php
 // Connexion à la base de données
-$databaseConnection = mysqli_connect("localhost", "fest", "pass23", "sae23", null, "/opt/lampp/var/mysql/mysql.sock");
+$databaseConnection = mysqli_connect("localhost", "fest", "pass23", "sae23");
 
 // Vérifier la connexion
 if (!$databaseConnection) {
     die("Échec de la connexion : " . mysqli_connect_error());
 }
 
-// Fonction pour obtenir la moyenne des valeurs pour une salle spécifique
-function getAverageValueByRoom($databaseConnection, $captname) {
+// Fonction pour obtenir la moyenne des valeurs pour un capteur spécifique
+function getAverageValueBySensor($databaseConnection, $captname) {
     $averageValue = null;
 
-    // Requête pour obtenir la moyenne des valeurs pour une salle spécifique
+    // Requête pour obtenir la moyenne des valeurs pour un capteur spécifique
     $query = "
-        SELECT Valeur, AVG(Valeur)
+        SELECT AVG(Valeur) AS AvgValue
         FROM mesure
         WHERE NomCapt = '$captname'
     ";
 
     $result = mysqli_query($databaseConnection, $query);
 
-    $averageValue = $result;
+    if ($result) {
+        $row = mysqli_fetch_assoc($result);
+        if ($row) {
+            $averageValue = $row['AvgValue'];
+        }
+        mysqli_free_result($result);
+    } else {
+        echo "Erreur lors de la récupération de la moyenne : " . mysqli_error($databaseConnection);
+    }
 
     return $averageValue;
 }
 
-// Nom de la salle pour laquelle calculer la moyenne
-$captname= 'E007_co2';  // Remplacez par le nom de la salle souhaitée
+// Nom du capteur pour lequel calculer la moyenne
+$captname = 'E007_co2';  // Remplacez par le nom du capteur souhaité
 
-// Récupérer la moyenne des valeurs pour la salle spécifiée
-$averageValue = getAverageValueByRoom($databaseConnection, $captname);
+// Récupérer la moyenne des valeurs pour le capteur spécifié
+$averageValue = getAverageValueBySensor($databaseConnection, $captname);
 
-// Afficher la moyenne des valeurs pour la salle
+// Afficher la moyenne des valeurs pour le capteur
 if ($averageValue !== null) {
     echo "La valeur moyenne pour le capteur $captname est : $averageValue\n";
 } else {
