@@ -1,43 +1,56 @@
 <?php
 // Connexion à la base de données
-$databaseConnection = mysqli_connect("localhost", "fest", "pass23", "sae23", null, "/opt/lampp/var/mysql/mysql.sock");
+$databaseConnection = mysqli_connect("localhost", "fest", "pass23", "sae23");
 
 // Vérifier la connexion
 if (!$databaseConnection) {
     die("Échec de la connexion : " . mysqli_connect_error());
 }
 
-// Fonction pour obtenir la moyenne des valeurs pour une salle spécifique
-function getAverageValueByRoom($databaseConnection, $captname) {
-    $averageValue = null;
+// Paramètres
+$salle = "E007"; // Remplacez par le nom de la salle souhaitée
+$typeCapteur = "co2"; // Remplacez par le type de capteur souhaité
 
-    // Requête pour obtenir la moyenne des valeurs pour une salle spécifique
-    $query = "
-        SELECT Valeur, AVG(Valeur)
-        FROM mesure
-        WHERE NomCapt = '$captname'
-    ";
+// Construction du nom du capteur
+$sensorName = $salle . '_' . $typeCapteur;
 
-    $result = mysqli_query($databaseConnection, $query);
+// Requête SQL pour obtenir la valeur minimale, maximale et moyenne
+$query = "
+    SELECT 
+        MAX(Valeur) AS ValeurMax,
+        MIN(Valeur) AS ValeurMin,
+        AVG(Valeur) AS ValueMoyenne
+    FROM 
+        mesure
+    WHERE 
+        NomCapt = '$sensorName'
+";
 
-    $averageValue = $result;
+// Exécution de la requête
+$result = mysqli_query($databaseConnection, $query);
 
-    return $averageValue;
-}
+// Vérification du résultat
+if ($result) {
+    // Récupération du résultat
+    $row = mysqli_fetch_assoc($result);
 
-// Nom de la salle pour laquelle calculer la moyenne
-$captname= 'E007_co2';  // Remplacez par le nom de la salle souhaitée
+    // Affichage des résultats
+    if ($row) {
+        $maxValue = $row['ValeurMax'];
+        $minValue = $row['ValeurMin'];
+        $avgValue = $row['ValueMoyenne'];
 
-// Récupérer la moyenne des valeurs pour la salle spécifiée
-$averageValue = getAverageValueByRoom($databaseConnection, $captname);
-
-// Afficher la moyenne des valeurs pour la salle
-if ($averageValue !== null) {
-    echo "La valeur moyenne pour le capteur $captname est : $averageValue\n";
+        echo "Pour le capteur de type $typeCapteur dans la salle $salle :<br>";
+        echo "Valeur maximale : $maxValue<br>";
+        echo "Valeur minimale : $minValue<br>";
+        echo "Valeur moyenne : $avgValue<br>";
+    } else {
+        echo "Aucune valeur trouvée pour le capteur $sensorName.";
+    }
 } else {
-    echo "Aucune valeur trouvée pour le capteur $captname.\n";
+    echo "Erreur lors de l'exécution de la requête : " . mysqli_error($databaseConnection);
 }
 
-// Fermer la connexion
+// Fermeture de la connexion
 mysqli_close($databaseConnection);
 ?>
