@@ -42,10 +42,10 @@
 		<br />
 		<em><strong>Administration de la base : Acc&egrave;s limit&eacute; aux personnes autoris&eacute;es</strong></em>
 		<br />
-		</p>
+	</p>
 		<form action="login_admin.php" method="post" enctype="multipart/form-data">
 			<fieldset>
-				<legend>Saissez le mot de passe...</legend>
+				<legend>Saissez le mot de passe administrateur</legend>
 				<label for="mdp">Mot de passe : </label>
 				<input type="password" name="mdp" id="mdp" />
 			</fieldset>
