@@ -1,4 +1,5 @@
 #!/opt/lampp/bin/php
+
 <?php
 
 // Database connection
