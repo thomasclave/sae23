@@ -26,14 +26,14 @@
             <li><a href="./index.php">Accueil</a></li>
             <li><a href="./consultation.php">Consultation</a></li>
             <li><a href="./gestion_projet.html">Gestion de Projet</a></li>
-            <li><a href="./login_gest.php">Gestion</a></li>
-            <li><a href="">Se déconnecter</a></li>
+            <li><a href="./gestion.php">Gestion</a></li>
+            <li><a href="./admin.php">Administration</a></li>
         </ul>
      </nav>
      
      <!--Title-->
      <header>
-     <h2>Page d'administration</h2>
+     <h2>Administration</h2>
      </header>
 
 <main>
@@ -43,11 +43,11 @@
 		<em><strong>Administration de la base : Acc&egrave;s limit&eacute; aux personnes autoris&eacute;es</strong></em>
 		<br />
 	</p>
-		<form action="login_admin.php" method="post" enctype="multipart/form-data">
+		<form action="login_admin.php" method="post" enctype="multipart/form-data" class="form">
 			<fieldset>
-				<legend>Saissez le mot de passe administrateur</legend>
+				<legend>Saisissez le mot de passe administrateur</legend>
 				<label for="mdp">Mot de passe : </label>
-				<input type="password" name="mdp" id="mdp" />
+				<input type="password" name="mdp" id="mdp"/>
 			</fieldset>
 			<p>
 				<input type="submit" value="Valider" />

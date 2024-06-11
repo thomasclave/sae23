@@ -26,7 +26,7 @@
      
     <!--Title-->
     <header>
-    <h2>Administration</h2>
+    <h2>Gestion</h2>
     </header>
 
 		<?php 
@@ -37,17 +37,17 @@
 		<section>
 			<p>
 				<br />
-				<em><strong>Administration de la base : Acc&egrave;s limit&eacute; aux personnes autoris&eacute;es</strong></em>
+				<em><strong>Gestion des batiments : Acc&egrave;s limit&eacute; aux personnes autoris&eacute;es</strong></em>
 				<br />
 			</p>
 			<br />
-			<p>Mot de passe non saisi ou erron&eacute; !!!</p>
+			<p>Identifiant et/ou mot de passe non saisi ou erron&eacute; !!!</p>
 			<br />
 			<hr />
 		</section>
 		<footer>
 			<p><a href="index.php">Retour à l'accueil</a></p>
-			<p><a href="admin.php">Retour à l'identification</a></p>
+			<p><a href="gestion.php">Retour à l'identification</a></p>
 		</footer>
 	</body>
 </html>
