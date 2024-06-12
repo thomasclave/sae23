@@ -42,7 +42,7 @@
 		<br/>
 	</p>
 
-<main>
+<section>
 
     <form action="login_gest.php" method="post" class="form">
         <fieldset>
@@ -53,9 +53,8 @@
             <input type="password" id="mdp" name="mdp"><br><br>
         </fieldset>
         <input type="submit" value="Se connecter">
-		<hr/>
 
-</main>
+</section>
 
 <!--Footer-->
 <footer>

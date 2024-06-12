@@ -1,9 +1,15 @@
 <?php
 	session_start(); 
-	if ($_SESSION["auth"] != TRUE)
+	if ($_SESSION["auth"]!=TRUE)
 		header("Location:login_admin_error.php");
-    $_SESSION["nom_capt"] = $_REQUEST["nom_capt"];
-    $nom_capt = $_SESSION["nom_capt"];
+    $_SESSION["nom_capt"]=$_REQUEST["nom_capt"];
+    $nom_capt=$_SESSION["nom_capt"];
+	$_SESSION["type_capt"]=$_REQUEST["type_capt"];
+	$type_capt=$_SESSION["type_capt"];
+    $_SESSION["unite"]=$_REQUEST["unite"];
+	$unite=$_SESSION["unite"];
+    $_SESSION["nom_salle"]=$_REQUEST["nom_salle"];
+	$nom_salle=$_SESSION["nom_salle"];
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +47,7 @@
 
     <p>
         <br />
-	    <em><strong>Suppression d'un capteur</strong></em>
+	    <em><strong>Ajout d'un nouveau capteur</strong></em>
 	    <br />
     </p>
 		<section>
@@ -52,27 +58,33 @@
                 $resultat_verif = mysqli_query($id_bd, $requete_verif);
                 $capteur_existe = mysqli_num_rows($resultat_verif);
 
-                if ($capteur_existe == 0) {
+                if ($capteur_existe > 0) {
                     echo '<p>';
-                    echo "<br /><strong>Erreur : Le capteur n'existe pas dans la base de données.</strong><br />";
+                    echo "<br /><strong>Erreur : Le capteur existe déjà dans la base de données.</strong><br />";
                     echo '</p>';
                 }
                 else {
-                    $requete = "DELETE FROM `capteur` WHERE `nomcapt`='$nom_capt'";
+                    $requete = "INSERT INTO `capteur` (`nomcapt`, `typecapt`, `unite`, `nomsalle`)
+                    VALUES('$nom_capt','$type_capt','$unite','$nom_salle')";
                     $resultat = mysqli_query($id_bd, $requete)
                         or die("Execution de la requete impossible : $requete");
                     mysqli_close($id_bd);
 
                     echo '<p>';
-                    echo "<strong>Le capteur '$nom_capt' a été supprimé avec succès.</strong>";
-                    echo '</p>';
+                    echo "<ul>
+                            <li> Nom du capteur ajouté : $nom_capt</li>
+                            <li> Type du capteur ajouté : $type_capt </li>
+                            <li> Unite du capteur ajouté : $unite</li>
+                            <li> Salle : $nom_salle</li>
+                          </ul>
+                        </p>";
                 }
 			?>
 			<hr />
 		</section>
 		<footer>
-			<p><a href="del_cap.php">Supprimer un autre capteur</a></p>
-			<p><a href="modification_bdd.php">Modifier la base de données</a></p>
+			<p><a href="add_cap.php">Ajoutez un autre capteur</a></p>
+			<p><a href="modification_bdd.php">Modifier la base de donnees</a></p>
 			<p><a href="index.php">Retour à l'accueil</a></p>
 		</footer>
 	</body>

@@ -81,6 +81,19 @@ button:focus {
     box-shadow: 0 0 5px grey;
 }
 
+ul {
+  text-align: center;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* Espace entre les boutons */
+    margin-top: 2rem; /* Espace au-dessus des boutons */
+    margin-bottom: 2rem; /* Espace au-dessous des boutons */
+    overflow: hidden;
+}
+
 body {
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     background-color: #fcfcfc;
@@ -205,6 +218,7 @@ p{
     margin-right: 10%;
     margin-top: 40px; 
     text-align: center;
+    overflow: hidden;
 }
 p a {
     text-decoration: underline;
@@ -231,11 +245,7 @@ h3 {
 }
 
 main {
-    display: flex;
-    justify-content: center;
-    gap: 1rem; /* Espace entre les boutons */
-    margin-top: 2rem; /* Espace au-dessus des boutons */
-    margin-bottom: 2rem; /* Espace au-dessous des boutons */
+    margin-top: 5rem;
 }
 
 /*Elements liés aux classes pour des éléments particuliers*/

@@ -42,7 +42,7 @@
 	    <br />
     </p>
 
-<main>
+<section>
 		<form action="login_admin.php" method="post" enctype="multipart/form-data" class="form">
 			<fieldset>
 				<legend>Saisissez le mot de passe administrateur</legend>
@@ -55,7 +55,7 @@
 		</form>
 		<hr />
 
-</main>
+</section>
 
 <!--Footer-->
 <footer>

@@ -1,7 +1,7 @@
 <?php 
-	session_start(); 
-	if ($_SESSION["auth"]!=TRUE)
-		header("Location:login_admin_error.php");
+    session_start(); 
+    if ($_SESSION["auth"] != TRUE)
+        header("Location:login_admin_error.php");
 ?>
 
 <!DOCTYPE html>
@@ -32,28 +32,35 @@
         </ul>
      </nav>
      
-    <!--Title-->
-    <header>
-    <h2>Administration</h2>
-    </header>
+     <!--Title-->
+     <header>
+     <h2>Administration</h2>
+     </header>
 
     <p>
         <br />
-	    <em><strong>Que voulez-vous supprimer ?</strong></em>
-	    <br />
+        <em><strong>Suppression d'une salle</strong></em>
+        <br />
     </p>
 
     <section>
-        <button onclick="location.href='./del_bat.php'">Batiment</button>
-        <button onclick="location.href='./del_sal.php'">Salle</button>
-        <button onclick="location.href='./del_cap.php'">Capteur</button>
+        <form action="sup_sal.php" method="post" class="form">
+            <fieldset>
+                <legend>Information sur la salle</legend>
+                <label for="nom_salle">Nom de la salle:</label>
+                <input type="text" name="nom_salle" id="nom_salle" required/>
+            </fieldset>
+            <p>
+                <input type="submit" value="Supprimer" />
+            </p>
+        </form>
     </section>
 
-<!--Footer-->
-<footer>
-    Site réalisé dans le cadre de la SAE23<br>
-    <a href="./mentions-legales.html">Mentions Légales</a><br>
-</footer>
+    <!--Footer-->
+    <footer>
+        Site réalisé dans le cadre de la SAE23<br>
+        <a href="./mentions-legales.html">Mentions Légales</a><br>
+    </footer>
 
 </body>
 </html>
