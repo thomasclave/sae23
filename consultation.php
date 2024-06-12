@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +10,12 @@
     <link rel="stylesheet" href="./css/style.css">
 
     <!--Policies links-->
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700,400italic,700italic" rel="stylesheet"
+        type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-    
+
 </head>
+
 <body>
     <!--Navbar-->
     <nav class="navbar">
@@ -25,20 +28,23 @@
             <li><a href="./login_admin.php">Administration</a></li>
         </ul>
     </nav>
-     
+
     <!--Title-->
     <header>
         <h2>Consultation des données</h2>
     </header>
 
+        
     <main>
+        <p>Affichage des dernières données de chaque capteurs de chaque salle.</p>
+
         <?php
         include 'mysql.php'; // Connexion à la base de données
-
-        // Requête pour obtenir les salles
+        
+        // Requête pour obtenir les salles répertoriées dans la table "salle"
         $query_rooms = "
-            SELECT DISTINCT NomSalle
-            FROM salle
+        SELECT DISTINCT NomSalle
+        FROM salle
         ";
 
         $result_rooms = mysqli_query($id_bd, $query_rooms);
@@ -46,22 +52,22 @@
         if ($result_rooms && mysqli_num_rows($result_rooms) > 0) {
             while ($room = mysqli_fetch_assoc($result_rooms)) {
                 $room_name = $room['NomSalle'];
-                
+
                 echo "<br><br>";
                 echo "<h3>Salle: " . $room_name . "</h3>";
 
                 // Requête pour obtenir les capteurs de cette salle avec leur dernière mesure
                 $query_sensors = "
-                    SELECT c.NomCapt, c.TypeCapt, m.Date, m.Horaire, CONCAT(m.Valeur, ' ', c.Unite) AS Valeur_Unite
-                    FROM mesure m
-                    INNER JOIN capteur c ON m.NomCapt = c.NomCapt
-                    WHERE c.NomSalle = '$room_name'
-                        AND (m.Date, m.Horaire) IN (
-                            SELECT MAX(Date), MAX(Horaire)
-                            FROM mesure
-                            WHERE NomCapt = c.NomCapt
-                        )
-                ";
+            SELECT c.NomCapt, c.TypeCapt, m.Date, m.Horaire, CONCAT(m.Valeur, ' ', c.Unite) AS Valeur_Unite
+            FROM mesure m
+            INNER JOIN capteur c ON m.NomCapt = c.NomCapt
+            WHERE c.NomSalle = '$room_name'
+                AND (m.Date, m.Horaire) IN (
+                    SELECT MAX(Date), MAX(Horaire)
+                    FROM mesure
+                    WHERE NomCapt = c.NomCapt
+                )
+        ";
 
                 $result_sensors = mysqli_query($id_bd, $query_sensors);
 
@@ -85,10 +91,11 @@
         } else {
             echo "<p>Aucune salle trouvée.</p>";
         }
-        
+
         // Fermer la connexion à la base de données
         mysqli_close($id_bd);
         ?>
+        <br><br><br>
     </main>
 
     <!--Footer-->
@@ -98,4 +105,5 @@
     </footer>
 
 </body>
+
 </html>
