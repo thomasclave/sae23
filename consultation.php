@@ -35,53 +35,57 @@
         <?php
         include 'mysql.php'; // Connexion à la base de données
 
-        // Requête pour obtenir les noms des capteurs
-        $query_captors = "
-            SELECT DISTINCT NomCapt
-            FROM capteur
+        // Requête pour obtenir les salles
+        $query_rooms = "
+            SELECT DISTINCT NomSalle
+            FROM salle
         ";
 
-        $result_captors = mysqli_query($id_bd, $query_captors);
+        $result_rooms = mysqli_query($id_bd, $query_rooms);
 
-        if ($result_captors && mysqli_num_rows($result_captors) > 0) {
-            while ($captor = mysqli_fetch_assoc($result_captors)) {
-                $captor_name = $captor['NomCapt'];
+        if ($result_rooms && mysqli_num_rows($result_rooms) > 0) {
+            while ($room = mysqli_fetch_assoc($result_rooms)) {
+                $room_name = $room['NomSalle'];
                 
-                // Requête pour obtenir la dernière mesure du capteur actuel
-                $query_last_measure = "
-                    SELECT c.NomCapt, c.TypeCapt, m.Date, m.Horaire, m.Valeur, c.Unite
+                echo "<br><br>";
+                echo "<h3>Salle: " . $room_name . "</h3>";
+
+                // Requête pour obtenir les capteurs de cette salle avec leur dernière mesure
+                $query_sensors = "
+                    SELECT c.NomCapt, c.TypeCapt, m.Date, m.Horaire, CONCAT(m.Valeur, ' ', c.Unite) AS Valeur_Unite
                     FROM mesure m
                     INNER JOIN capteur c ON m.NomCapt = c.NomCapt
-                    WHERE m.NomCapt = '$captor_name'
-                    ORDER BY m.Date DESC, m.Horaire DESC
-                    LIMIT 1
+                    WHERE c.NomSalle = '$room_name'
+                        AND (m.Date, m.Horaire) IN (
+                            SELECT MAX(Date), MAX(Horaire)
+                            FROM mesure
+                            WHERE NomCapt = c.NomCapt
+                        )
                 ";
 
-                $result_last_measure = mysqli_query($id_bd, $query_last_measure);
+                $result_sensors = mysqli_query($id_bd, $query_sensors);
 
-                if ($result_last_measure && mysqli_num_rows($result_last_measure) > 0) {
-                    $row = mysqli_fetch_assoc($result_last_measure);
-                    echo "<h3>Dernière mesure du capteur: " . $captor_name . "</h3>";
+                if ($result_sensors && mysqli_num_rows($result_sensors) > 0) {
                     echo "<table>";
-                    echo "<tr><th>Nom du Capteur</th><th>Type</th><th>Date</th><th>Heure</th><th>Valeur</th><th>Unité</th></tr>";
-                    echo "<tr>";
-                    echo "<td>" . $row['NomCapt'] . "</td>";
-                    echo "<td>" . $row['TypeCapt'] . "</td>";
-                    echo "<td>" . $row['Date'] . "</td>";
-                    echo "<td>" . $row['Horaire'] . "</td>";
-                    echo "<td>" . $row['Valeur'] . "</td>";
-                    echo "<td>" . $row['Unite'] . "</td>";
-                    echo "</tr>";
+                    echo "<tr><th>Nom du Capteur</th><th>Type</th><th>Date</th><th>Heure</th><th>Valeur</th></tr>";
+                    while ($sensor = mysqli_fetch_assoc($result_sensors)) {
+                        echo "<tr>";
+                        echo "<td>" . $sensor['NomCapt'] . "</td>";
+                        echo "<td>" . $sensor['TypeCapt'] . "</td>";
+                        echo "<td>" . $sensor['Date'] . "</td>";
+                        echo "<td>" . $sensor['Horaire'] . "</td>";
+                        echo "<td>" . $sensor['Valeur_Unite'] . "</td>";
+                        echo "</tr>";
+                    }
                     echo "</table>";
                 } else {
-                    echo "<h3>Capteur: " . $captor_name . "</h3>";
-                    echo "Aucune donnée disponible.";
+                    echo "<p>Aucun capteur trouvé dans cette salle.</p>";
                 }
             }
         } else {
-            echo "Aucun capteur trouvé.";
+            echo "<p>Aucune salle trouvée.</p>";
         }
-
+        
         // Fermer la connexion à la base de données
         mysqli_close($id_bd);
         ?>
