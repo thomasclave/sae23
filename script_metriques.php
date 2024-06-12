@@ -1,11 +1,5 @@
 <?php
-// Connexion à la base de données
-$databaseConnection = mysqli_connect("localhost", "fest", "pass23", "sae23");
-
-// Check connection
-if (!$databaseConnection) {
-    die("Échec de la connexion : " . mysqli_connect_error());
-}
+include 'mysql.php';
 
 // Settings
 $salle = "E007"; // Replace with the name of the desired room
@@ -27,7 +21,7 @@ $query = "
 ";
 
 // Executing the query
-$result = mysqli_query($databaseConnection, $query);
+$result = mysqli_query($id_bd, $query);
 
 // Checking the result
 if ($result) {
@@ -48,9 +42,9 @@ if ($result) {
         echo "Aucune valeur trouvée pour le capteur $sensorName.";
     }
 } else {
-    echo "Erreur lors de l'exécution de la requête : " . mysqli_error($databaseConnection);
+    echo "Erreur lors de l'exécution de la requête : " . mysqli_error($id_bd);
 }
 
 // Closing the connection
-mysqli_close($databaseConnection);
+mysqli_close($id_bd);
 ?>
