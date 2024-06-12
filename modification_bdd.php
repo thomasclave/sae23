@@ -43,10 +43,10 @@
 	    <br />
     </p>
 
-    <main>
+    <section>
         <button onclick="location.href='./ajouter.php'">Ajouter</button>
         <button onclick="location.href='./supprimer.php'">Supprimer</button>
-    </main>
+    </section>
 
 <!--Footer-->
 <footer>

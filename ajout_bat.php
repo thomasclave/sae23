@@ -1,9 +1,15 @@
 <?php
 	session_start(); 
-	if ($_SESSION["auth"] != TRUE)
+	if ($_SESSION["auth"]!=TRUE)
 		header("Location:login_admin_error.php");
-    $_SESSION["nom_capt"] = $_REQUEST["nom_capt"];
-    $nom_capt = $_SESSION["nom_capt"];
+    $_SESSION["id_bat"]=$_REQUEST["id_bat"];
+    $id_bat=$_SESSION["id_bat"];
+	$_SESSION["nom_bat"]=$_REQUEST["nom_bat"];
+	$nom_bat=$_SESSION["nom_bat"];
+    $_SESSION["login_gest"]=$_REQUEST["login_gest"];
+	$login_gest=$_SESSION["login_gest"];
+    $_SESSION["mdp_gest"]=$_REQUEST["mdp_gest"];
+	$mdp_gest=$_SESSION["mdp_gest"];
 ?>
 
 <!DOCTYPE html>
@@ -41,38 +47,44 @@
 
     <p>
         <br />
-	    <em><strong>Suppression d'un capteur</strong></em>
+	    <em><strong>Ajout d'un nouveau batiment</strong></em>
 	    <br />
     </p>
 		<section>
 			<?php
                 /* Accès à la base */
 		        include ("mysql.php");
-                $requete_verif = "SELECT * FROM `capteur` WHERE `nomcapt`='$nom_capt'";
+                $requete_verif = "SELECT * FROM `Batiment` WHERE `id_bat`='$id_bat'";
                 $resultat_verif = mysqli_query($id_bd, $requete_verif);
-                $capteur_existe = mysqli_num_rows($resultat_verif);
+                $batiment_existe = mysqli_num_rows($resultat_verif);
 
-                if ($capteur_existe == 0) {
+                if ($batiment_existe > 0) {
                     echo '<p>';
-                    echo "<br /><strong>Erreur : Le capteur n'existe pas dans la base de données.</strong><br />";
+                    echo "<br /><strong>Erreur : Le batiment existe déjà dans la base de données.</strong><br />";
                     echo '</p>';
                 }
                 else {
-                    $requete = "DELETE FROM `capteur` WHERE `nomcapt`='$nom_capt'";
-                    $resultat = mysqli_query($id_bd, $requete)
-                        or die("Execution de la requete impossible : $requete");
+                    $requete = "INSERT INTO `Batiment` (`id_bat`, `nombat`, `logingest`, `mdpgest`)
+                    VALUES('$id_bat','$nom_bat','$login_gest','$mdp_gest')";
+                    $resultat = mysqli_query($id_bd, $requete);
+                        #or die("Execution de la requete impossible : $requete");
                     mysqli_close($id_bd);
 
                     echo '<p>';
-                    echo "<strong>Le capteur '$nom_capt' a été supprimé avec succès.</strong>";
-                    echo '</p>';
+                    echo "<ul>
+                            <li> Identifiant du batiment ajouté : $id_bat</li>
+                            <li> Nom du batiment ajouté : $nom_bat </li>
+                            <li> Login du gestionnaire : $login_gest</li>
+                            <li> Mot de passe du gestionnaire : $mdp_gest</li>
+                          </ul>
+                        </p>";
                 }
 			?>
 			<hr />
 		</section>
 		<footer>
-			<p><a href="del_cap.php">Supprimer un autre capteur</a></p>
-			<p><a href="modification_bdd.php">Modifier la base de données</a></p>
+			<p><a href="add_bat.php">Ajoutez un autre batiment</a></p>
+			<p><a href="modification_bdd.php">Modifier la base de donnees</a></p>
 			<p><a href="index.php">Retour à l'accueil</a></p>
 		</footer>
 	</body>

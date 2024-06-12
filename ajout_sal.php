@@ -1,9 +1,15 @@
 <?php
 	session_start(); 
-	if ($_SESSION["auth"] != TRUE)
+	if ($_SESSION["auth"]!=TRUE)
 		header("Location:login_admin_error.php");
-    $_SESSION["nom_capt"] = $_REQUEST["nom_capt"];
-    $nom_capt = $_SESSION["nom_capt"];
+    $_SESSION["nom_salle"]=$_REQUEST["nom_salle"];
+    $nom_salle=$_SESSION["nom_salle"];
+	$_SESSION["type_salle"]=$_REQUEST["type_salle"];
+	$type_salle=$_SESSION["type_salle"];
+    $_SESSION["capacite"]=$_REQUEST["capacite"];
+	$capacite=$_SESSION["capacite"];
+    $_SESSION["id_bat"]=$_REQUEST["id_bat"];
+	$id_bat=$_SESSION["id_bat"];
 ?>
 
 <!DOCTYPE html>
@@ -41,38 +47,44 @@
 
     <p>
         <br />
-	    <em><strong>Suppression d'un capteur</strong></em>
+	    <em><strong>Ajout d'une nouvelle salle</strong></em>
 	    <br />
     </p>
 		<section>
 			<?php
                 /* Accès à la base */
 		        include ("mysql.php");
-                $requete_verif = "SELECT * FROM `capteur` WHERE `nomcapt`='$nom_capt'";
+                $requete_verif = "SELECT * FROM `salle` WHERE `nomsalle`='$nom_salle'";
                 $resultat_verif = mysqli_query($id_bd, $requete_verif);
-                $capteur_existe = mysqli_num_rows($resultat_verif);
+                $salle_existe = mysqli_num_rows($resultat_verif);
 
-                if ($capteur_existe == 0) {
+                if ($salle_existe > 0) {
                     echo '<p>';
-                    echo "<br /><strong>Erreur : Le capteur n'existe pas dans la base de données.</strong><br />";
+                    echo "<br /><strong>Erreur : La salle existe déjà dans la base de donnees.</strong><br />";
                     echo '</p>';
                 }
                 else {
-                    $requete = "DELETE FROM `capteur` WHERE `nomcapt`='$nom_capt'";
+                    $requete = "INSERT INTO `salle` (`nomsalle`, `typesalle`, `capacite`, `id_bat`)
+                    VALUES('$nom_salle','$type_salle','$capacite','$id_bat')";
                     $resultat = mysqli_query($id_bd, $requete)
                         or die("Execution de la requete impossible : $requete");
                     mysqli_close($id_bd);
 
                     echo '<p>';
-                    echo "<strong>Le capteur '$nom_capt' a été supprimé avec succès.</strong>";
-                    echo '</p>';
+                    echo "<ul>
+                            <li> Nom de la salle ajoutée : $id_bat</li>
+                            <li> Type de la salle ajoutée : $type_salle </li>
+                            <li> Capacite de la salle ajoutée : $capacite</li>
+                            <li> Batiment : $id_bat</li>
+                          </ul>
+                        </p>";
                 }
 			?>
 			<hr />
 		</section>
 		<footer>
-			<p><a href="del_cap.php">Supprimer un autre capteur</a></p>
-			<p><a href="modification_bdd.php">Modifier la base de données</a></p>
+			<p><a href="add_sal.php">Ajoutez une autre salle</a></p>
+			<p><a href="modification_bdd.php">Modifier la base de donnees</a></p>
 			<p><a href="index.php">Retour à l'accueil</a></p>
 		</footer>
 	</body>

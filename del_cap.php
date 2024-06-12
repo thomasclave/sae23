@@ -1,6 +1,6 @@
 <?php 
 	session_start(); 
-	if ($_SESSION["auth"]!=TRUE)
+	if ($_SESSION["auth"] != TRUE)
 		header("Location:login_admin_error.php");
 ?>
 
@@ -32,22 +32,29 @@
         </ul>
      </nav>
      
-    <!--Title-->
-    <header>
-    <h2>Administration</h2>
-    </header>
+     <!--Title-->
+     <header>
+     <h2>Administration</h2>
+     </header>
 
     <p>
         <br />
-	    <em><strong>Que voulez-vous supprimer ?</strong></em>
+	    <em><strong>Suppression d'un capteur</strong></em>
 	    <br />
     </p>
 
-    <section>
-        <button onclick="location.href='./del_bat.php'">Batiment</button>
-        <button onclick="location.href='./del_sal.php'">Salle</button>
-        <button onclick="location.href='./del_cap.php'">Capteur</button>
-    </section>
+<section>
+        <form action="sup_cap.php" method="post" enctype="multipart/form-data" class="form">
+				<fieldset>
+					<legend>Information sur le capteur</legend>
+					<label for="nom_capt">Nom du capteur à supprimer :</label>
+					<input type="text" name="nom_capt" id ="nom_capt" required/>
+				</fieldset>
+				<p>
+					<input type="submit" value="Validez" />
+                </p>
+			</form>
+</section>
 
 <!--Footer-->
 <footer>

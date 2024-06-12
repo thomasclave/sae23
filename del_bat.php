@@ -1,6 +1,6 @@
 <?php 
 	session_start(); 
-	if ($_SESSION["auth"]!=TRUE)
+	if ($_SESSION["auth"] != TRUE)
 		header("Location:login_admin_error.php");
 ?>
 
@@ -32,22 +32,29 @@
         </ul>
      </nav>
      
-    <!--Title-->
-    <header>
-    <h2>Administration</h2>
-    </header>
+     <!--Title-->
+     <header>
+     <h2>Administration</h2>
+     </header>
 
     <p>
         <br />
-	    <em><strong>Que voulez-vous supprimer ?</strong></em>
+	    <em><strong>Suppression d'un bâtiment</strong></em>
 	    <br />
     </p>
 
-    <section>
-        <button onclick="location.href='./del_bat.php'">Batiment</button>
-        <button onclick="location.href='./del_sal.php'">Salle</button>
-        <button onclick="location.href='./del_cap.php'">Capteur</button>
-    </section>
+<section>
+        <form action="sup_bat.php" method="post" class="form">
+				<fieldset>
+					<legend>Information sur le bâtiment</legend>
+					<label for="id_bat">Identifiant du bâtiment à supprimer (A, B, C, ...):</label>
+					<input type="text" name="id_bat" id="id_bat" required/>
+				</fieldset>
+				<p>
+					<input type="submit" value="Validez" />
+                </p>
+			</form>
+</section>
 
 <!--Footer-->
 <footer>

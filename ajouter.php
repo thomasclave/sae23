@@ -43,11 +43,11 @@
 	    <br />
     </p>
 
-    <main>
+    <section>
         <button onclick="location.href='./add_bat.php'">Batiment</button>
         <button onclick="location.href='./add_sal.php'">Salle</button>
         <button onclick="location.href='./add_cap.php'">Capteur</button>
-    </main>
+    </section>
 
 <!--Footer-->
 <footer>
