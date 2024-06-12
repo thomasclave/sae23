@@ -2,50 +2,55 @@
 // Connexion à la base de données
 $databaseConnection = mysqli_connect("localhost", "fest", "pass23", "sae23");
 
-// Vérifier la connexion
+// Check connection
 if (!$databaseConnection) {
     die("Échec de la connexion : " . mysqli_connect_error());
 }
 
-// Fonction pour obtenir la moyenne des valeurs pour un capteur spécifique
-function getAverageValueBySensor($databaseConnection, $captname) {
-    $averageValue = null;
+// Settings
+$salle = "E007"; // Replace with the name of the desired room
+$typeCapteur = "co2"; // Replace with desired sensor type
 
-    // Requête pour obtenir la moyenne des valeurs pour un capteur spécifique
-    $query = "
-        SELECT AVG(Valeur) AS AvgValue
-        FROM mesure
-        WHERE NomCapt = '$captname'
-    ";
+// Construction of sensor name
+$sensorName = $salle . '_' . $typeCapteur;
 
-    $result = mysqli_query($databaseConnection, $query);
+// SQL query to get minimum, maximum and average value
+$query = "
+    SELECT 
+        MAX(Valeur) AS ValeurMax,
+        MIN(Valeur) AS ValeurMin,
+        AVG(Valeur) AS ValueMoyenne
+    FROM 
+        mesure
+    WHERE 
+        NomCapt = '$sensorName'
+";
 
-    if ($result) {
-        $row = mysqli_fetch_assoc($result);
-        if ($row) {
-            $averageValue = $row['AvgValue'];
-        }
-        mysqli_free_result($result);
+// Executing the query
+$result = mysqli_query($databaseConnection, $query);
+
+// Checking the result
+if ($result) {
+    // Retrieving the result
+    $row = mysqli_fetch_assoc($result);
+
+    // Displaying results
+    if ($row) {
+        $maxValue = $row['ValeurMax'];
+        $minValue = $row['ValeurMin'];
+        $avgValue = $row['ValueMoyenne'];
+
+        echo "Pour le capteur de type $typeCapteur dans la salle $salle :<br>";
+        echo "Valeur maximale : $maxValue<br>";
+        echo "Valeur minimale : $minValue<br>";
+        echo "Valeur moyenne : $avgValue<br>";
     } else {
-        echo "Erreur lors de la récupération de la moyenne : " . mysqli_error($databaseConnection);
+        echo "Aucune valeur trouvée pour le capteur $sensorName.";
     }
-
-    return $averageValue;
-}
-
-// Nom du capteur pour lequel calculer la moyenne
-$captname = 'E007_co2';  // Remplacez par le nom du capteur souhaité
-
-// Récupérer la moyenne des valeurs pour le capteur spécifié
-$averageValue = getAverageValueBySensor($databaseConnection, $captname);
-
-// Afficher la moyenne des valeurs pour le capteur
-if ($averageValue !== null) {
-    echo "La valeur moyenne pour le capteur $captname est : $averageValue\n";
 } else {
-    echo "Aucune valeur trouvée pour le capteur $captname.\n";
+    echo "Erreur lors de l'exécution de la requête : " . mysqli_error($databaseConnection);
 }
 
-// Fermer la connexion
+// Closing the connection
 mysqli_close($databaseConnection);
 ?>
