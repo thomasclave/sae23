@@ -2,7 +2,7 @@
 
 <?php
 
-include 'mysql.php'; // Inclusion du fichier mysql.php pour la connexion à la base de données
+include 'mysql.php'; // database connection
 
 // Infinite loop
 while (true) {

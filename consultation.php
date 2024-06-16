@@ -39,9 +39,9 @@
         <p>Affichage des dernières données de chaque capteurs de chaque salle.</p>
 
         <?php
-        include 'mysql.php'; // Connexion à la base de données
+        include 'mysql.php'; // Connection to the database
         
-        // Requête pour obtenir les salles répertoriées dans la table "salle"
+        // Query to get the rooms listed in the "salle" table
         $query_rooms = "
         SELECT DISTINCT NomSalle
         FROM salle
@@ -56,7 +56,7 @@
                 echo "<br><br>";
                 echo "<h3>Salle: " . $room_name . "</h3>";
 
-                // Requête pour obtenir les capteurs de cette salle avec leur dernière mesure
+                // Query to get the sensors in this room with their latest measurement
                 $query_sensors = "
             SELECT c.NomCapt, c.TypeCapt, m.Date, m.Horaire, CONCAT(m.Valeur, ' ', c.Unite) AS Valeur_Unite
             FROM mesure m
@@ -92,7 +92,7 @@
             echo "<p>Aucune salle trouvée.</p>";
         }
 
-        // Fermer la connexion à la base de données
+        // Close the database connection
         mysqli_close($id_bd);
         ?>
         <br><br><br>

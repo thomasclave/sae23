@@ -10,7 +10,7 @@ $mdp = $_SESSION["mdp"];
 
 include("mysql.php");
 
-// Récupération des bâtiments gérés par le gestionnaire
+// Retrieving the buildings managed by the manager
 $requete_batiments = "SELECT ID_Bat, NomBat FROM batiment WHERE LoginGest = '$login' AND MdpGest = '$mdp'";
 $resultat_batiments = mysqli_query($id_bd, $requete_batiments)
     or die("Execution de la requete impossible : $requete_batiments");
@@ -69,7 +69,7 @@ $resultat_batiments = mysqli_query($id_bd, $requete_batiments)
             <label for="salle">Sélectionnez une salle :</label>
             <select name="salle" id="salle" required>
                 <?php
-                // Reset le pointeur de résultat pour récupérer les salles associées au bâtiment sélectionné
+                // Reset the result pointer to retrieve the rooms associated with the selected building
                 mysqli_data_seek($resultat_batiments, 0);
 
                 while ($row = mysqli_fetch_assoc($resultat_batiments)) {
@@ -89,7 +89,7 @@ $resultat_batiments = mysqli_query($id_bd, $requete_batiments)
             <label for="capteur">Sélectionnez un type de capteur :</label>
             <select name="capteur" id="capteur" required>
                 <?php
-                // Récupération des types de capteurs associés à chaque salle
+                // Retrieving the sensor types associated with each room
                 mysqli_data_seek($resultat_batiments, 0);
 
                 while ($row = mysqli_fetch_assoc($resultat_batiments)) {

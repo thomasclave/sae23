@@ -1,5 +1,5 @@
 <?php
-	// Démarrage de la session
+	// Start the session
 	session_start();
 ?>
 
@@ -30,9 +30,9 @@
     </header>
 
 		<?php 
-			$_SESSION = array(); // Réinitialisation du tableau de session
-			session_destroy();   // Destruction de la session
-			unset($_SESSION);    // Destruction du tableau de session
+			$_SESSION = array(); // Reset of the session array
+			session_destroy();   // Session destruction
+			unset($_SESSION);    // Array destruction
 		?>
 		<section>
 			<p>

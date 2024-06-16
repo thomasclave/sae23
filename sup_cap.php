@@ -46,7 +46,7 @@
     </p>
 		<section>
 			<?php
-                /* Accès à la base */
+                /* Access to the database */
 		        include ("mysql.php");
                 $requete_verif = "SELECT * FROM `capteur` WHERE `nomcapt`='$nom_capt'";
                 $resultat_verif = mysqli_query($id_bd, $requete_verif);

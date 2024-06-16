@@ -49,9 +49,9 @@
         <h2>Bâtiments gérés</h2>
 
         <?php
-        include 'mysql.php'; // Connexion à la base de données
+        include 'mysql.php'; // Connection to the database
         
-        // Requête pour obtenir les bâtiments gérés
+        // Request to get the buildings managed
         $query_buildings = "
         SELECT DISTINCT NomBat, ID_Bat
         FROM batiment
@@ -74,7 +74,7 @@
 
         <h2>Salles gérées</h2>
         <?php
-        // Requête pour obtenir les salles gérées
+        // Resquest to get the rooms managed
         $query_rooms = "
         SELECT NomSalle, NomBat
         FROM salle s
@@ -94,7 +94,7 @@
             echo "<p>Aucune salle trouvée.</p>";
         }
         echo "<br><br>";
-        // Fermer la connexion à la base de données
+        // Close the database connection
         mysqli_close($id_bd);
         ?>
 

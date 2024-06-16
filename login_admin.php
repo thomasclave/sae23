@@ -1,16 +1,16 @@
 <?php
 	session_start();
-	$_SESSION["mdp"]=$_REQUEST["mdp"];  // Récupération du mot de passe
+	$_SESSION["mdp"]=$_REQUEST["mdp"];  // Get the password
 	$motdep=$_SESSION["mdp"];
 	$_SESSION["auth"]=FALSE;
 
-	// Script de vérification du mot de passe d'administration, en utilisant la table Connexion
+	// Script for verifying the administration password, using the Connexion table
 
 	if(empty($motdep))
 		header("Location:login_admin_error.php");
 	else
      {
-		/* Accès à la base */
+		/* Access to the database */
 		include ("mysql.php");
 
 		$requete = "SELECT `mdp` FROM `administration`";
@@ -26,9 +26,9 @@
 		 }
 		else
 		 {
-			$_SESSION = array(); // Réinitialisation du tableau de session
-            session_destroy();   // Destruction de la session
-            unset($_SESSION);    // Destruction du tableau de session
+			$_SESSION = array(); // Reset of the session array
+			session_destroy();   // Session destruction
+			unset($_SESSION);    // Array destruction
             mysqli_close($id_bd);
             echo "<script type='text/javascript'>document.location.replace('login_admin_error.php');</script>";
 		 }

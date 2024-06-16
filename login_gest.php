@@ -7,17 +7,17 @@ if (!isset($_REQUEST["login"]) || !isset($_REQUEST["mdp"])) {
     exit();
 }
 
-$_SESSION["login"] = $_REQUEST["login"];  // Récupération du login
+$_SESSION["login"] = $_REQUEST["login"];  // Login recovery
 $login = $_SESSION["login"];
-$_SESSION["mdp"] = $_REQUEST["mdp"];  // Récupération du mot de passe
+$_SESSION["mdp"] = $_REQUEST["mdp"];  // Get the password
 $mdp = $_SESSION["mdp"];
 
-// Vérifier la connexion
+// check if the login and password are empty
 if (empty($mdp) || empty($login)) {
     header("Location:login_gest_error.php");
     exit();
 } else {
-    // Accès à la base
+    // access to the database
     include("mysql.php");
 
     $requete = "SELECT * FROM batiment WHERE LoginGest = '$login' AND MdpGest = '$mdp'";
@@ -28,9 +28,9 @@ if (empty($mdp) || empty($login)) {
         mysqli_close($id_bd);
         echo "<script type='text/javascript'>document.location.replace('choix_gestion.php');</script>";
     } else {
-        $_SESSION = array(); // Réinitialisation du tableau de session
-        session_destroy();   // Destruction de la session
-        unset($_SESSION);    // Destruction du tableau de session
+        $_SESSION = array(); // Reset of the session array
+		session_destroy();   // Session destruction
+		unset($_SESSION);    // Array destruction
         mysqli_close($id_bd);
         echo "<script type='text/javascript'>document.location.replace('login_gest_error.php');</script>";
     }

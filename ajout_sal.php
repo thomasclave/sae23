@@ -52,7 +52,7 @@
     </p>
 		<section>
 			<?php
-                /* Accès à la base */
+                /* access to the database */
 		        include ("mysql.php");
                 $requete_verif = "SELECT * FROM `salle` WHERE `nomsalle`='$nom_salle'";
                 $resultat_verif = mysqli_query($id_bd, $requete_verif);
