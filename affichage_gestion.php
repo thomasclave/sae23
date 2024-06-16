@@ -6,10 +6,10 @@ if ($_SESSION["auth"] != TRUE) {
 }
 
 include ("mysql.php");
-$_SESSION["salle"]=$_REQUEST["salle"];  // Récupération du mot de passe
+$_SESSION["salle"]=$_REQUEST["salle"];  
 $NomSalle=$_SESSION["salle"];
 
-$_SESSION["capteur"]=$_REQUEST["capteur"];  // Récupération du mot de passe
+$_SESSION["capteur"]=$_REQUEST["capteur"]; 
 $TypeCapt=$_SESSION["capteur"];
 
 $NomCapt=$NomSalle ."_". $TypeCapt;
@@ -54,12 +54,12 @@ $NomCapt=$NomSalle ."_". $TypeCapt;
 
     <main>
         <?php
-        include 'mysql.php'; // Connexion à la base de données
+        include 'mysql.php'; // Connection to the database
         
         echo "<br><br>";
         echo "<h3>Capteur : " . $NomCapt . "</h3>";
 
-        // Requête pour obtenir les mesures du capteur spécifié
+        // Query to retrieve measurements for the specified sensor
         $requete_mesures = "
             SELECT c.NomCapt, c.TypeCapt, m.Date, m.Horaire,  CONCAT(m.Valeur, ' ', c.Unite) AS Valeur_Unite
             FROM mesure m
@@ -85,11 +85,11 @@ $NomCapt=$NomSalle ."_". $TypeCapt;
             echo "</table>";
             echo "<br><br>";
 
-            // Requête pour obtenir l'unité du capteur
+            // Query to retrieve the unit of the sensor
             $requete_unite = "SELECT Unite FROM capteur WHERE NomCapt = '$NomCapt'";
             $resultat_unite = mysqli_query($id_bd, $requete_unite);
             
-            // Vérification du résultat
+            // Check the result
             if ($resultat_unite) {
                 $row = mysqli_fetch_assoc($resultat_unite);
                 $unit = $row['Unite'];
@@ -97,7 +97,7 @@ $NomCapt=$NomSalle ."_". $TypeCapt;
                 $unit = "Unité non trouvée";
             }
 
-            // Calcul des métriques
+            // Calculating metrics
             $query = "
                 SELECT 
                     MAX(Valeur) AS ValeurMax,
@@ -109,14 +109,13 @@ $NomCapt=$NomSalle ."_". $TypeCapt;
                     NomCapt = '$NomCapt'
             ";
 
-            // Exécution de la requête
+            // Execute the query
             $result = mysqli_query($id_bd, $query);
             
-            // Vérification du résultat
+            // Check the result
             if ($result) {
                 $row = mysqli_fetch_assoc($result);
-
-                // Affichage des résultats
+                // Displaying the results
                 if ($row) {
                     $maxValue = $row['ValeurMax'];
                     $minValue = $row['ValeurMin'];
@@ -138,7 +137,7 @@ $NomCapt=$NomSalle ."_". $TypeCapt;
             echo "<p>Aucune mesure trouvée pour ce capteur.</p>";
         }
 
-        // Fermer la connexion à la base de données
+        // Close the database connection
         mysqli_close($id_bd);
         ?>
     </main>
